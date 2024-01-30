@@ -20,6 +20,7 @@ class HealthCheckMiddleware:
         return self.get_response(request)
 
     def liveness(self, request):
+        return HttpResponse("OK")
         # Test DB readiness
         try:
             for name in connections:
@@ -41,7 +42,6 @@ class HealthCheckMiddleware:
         except Exception:
             return HttpResponseServerError("cache: cannot connect to cache.")
 
-        return HttpResponse("OK")
 
     def readiness(self, request):
         connection = connections[DEFAULT_DB_ALIAS]
